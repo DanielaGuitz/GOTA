@@ -1,6 +1,6 @@
 <?= $this->extend('layouts/main') ?>
 
-<?= $this->section('title') ?>Registrar Lectura<?= $this->endSection() ?>
+<?= $this->section('title') ?>Recibo de Lectura<?= $this->endSection() ?>
 
 <?= $this->section('styles') ?>
 <style>
@@ -8,6 +8,7 @@
         --primary: #0d6efd;
         --primary-dark: #0a58ca;
         --secondary: #6c757d;
+        --success: #198754;
         --sidebar-width: 280px;
         --card-radius: 16px;
         --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
@@ -112,14 +113,21 @@
     }
     .sidebar-menu li i { width: 22px; font-size: 1.1rem; text-align: center; }
 
-    .main-content { padding: 16px; max-width: 700px; margin: 0 auto; }
+    .main-content { padding: 16px; max-width: 600px; margin: 0 auto; }
 
-    .form-card {
+    .receipt-card {
         background: #fff;
         border-radius: var(--card-radius);
-        padding: 24px;
         box-shadow: var(--shadow-sm);
         border: 1px solid rgba(0,0,0,0.03);
+        overflow: hidden;
+    }
+
+    .receipt-header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        padding: 20px;
+        text-align: center;
     }
 
     .bottom-nav {
@@ -146,6 +154,29 @@
         .main-content { margin-left: var(--sidebar-width); padding: 32px; }
         .bottom-nav { display: none; }
     }
+
+    /*
+     * Al imprimir (Ctrl+P), ocultamos todo lo que no debe salir en papel:
+     * header, sidebar, bottom-nav y el botón de imprimir.
+     */
+    @media print {
+        .app-header,
+        .sidebar,
+        .sidebar-overlay,
+        .bottom-nav,
+        .no-imprimir {
+            display: none !important;
+        }
+        .main-content {
+            margin: 0;
+            padding: 0;
+            max-width: 100%;
+        }
+        body {
+            padding-bottom: 0;
+            background: #fff;
+        }
+    }
 </style>
 <?= $this->endSection() ?>
 
@@ -153,8 +184,7 @@
 
 <?php
 /**
- * @var int $contador_id
- * @var float $lectura_anterior
+ * @var array $lectura  Registro completo de la tabla "lecturas"
  */
 ?>
 
@@ -207,41 +237,68 @@
 </aside>
 
 <main class="main-content">
-    <div class="mb-3">
-        <h5 class="fw-bold mb-0" style="font-size: 1.2rem;">Registrar Lectura</h5>
-        <small class="text-muted" style="font-size: 0.7rem;">Contador #<?= esc((string) $contador_id) ?></small>
+
+    <div class="no-imprimir mb-3 text-end">
+        <button onclick="window.print()" class="btn btn-primary rounded-pill">
+            <i class="fas fa-print me-1"></i> Imprimir Recibo
+        </button>
     </div>
 
-    <div class="form-card">
-        <?php if (session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger">
-                <?= esc(session()->getFlashdata('error')) ?>
-            </div>
-        <?php endif; ?>
-
-        <form action="<?= site_url('lecturas/guardar') ?>" method="post">
-            <?= csrf_field() ?>
-            <input type="hidden" name="contador_id" value="<?= esc((string) $contador_id) ?>">
-
-            <div class="mb-3">
-                <label class="form-label">Lectura anterior</label>
-                <input type="text" class="form-control" value="<?= esc((string) $lectura_anterior) ?>" disabled>
-                <input type="hidden" name="lectura_anterior" value="<?= esc((string) $lectura_anterior) ?>">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Lectura actual</label>
-                <input type="number" step="0.01" name="lectura_actual" class="form-control" required autofocus>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100 rounded-pill">
-                <i class="fas fa-save me-1"></i> Guardar Lectura
-            </button>
-        </form>
+    <div class="receipt-card">
+        <div class="receipt-header">
+            <h4 class="mb-0">Recibo de Consumo de Agua</h4>
+            <small>Sistema GOTA</small>
+        </div>
+        <div class="p-4">
+            <table class="table table-borderless mb-0">
+                <tr>
+                    <th>Contador:</th>
+                    <td>#<?= esc((string) $lectura['contador_id']) ?></td>
+                </tr>
+                <tr>
+                    <th>Fecha de lectura:</th>
+                    <td><?= esc(date('d/m/Y', strtotime($lectura['fecha']))) ?></td>
+                </tr>
+                <tr>
+                    <th>Lectura anterior:</th>
+                    <td><?= esc((string) $lectura['lectura_anterior']) ?></td>
+                </tr>
+                <tr>
+                    <th>Lectura actual:</th>
+                    <td><?= esc((string) $lectura['lectura_actual']) ?></td>
+                </tr>
+                <tr class="table-active">
+                    <th>Consumo:</th>
+                    <td><strong><?= esc((string) $lectura['consumo']) ?></strong></td>
+                </tr>
+                <tr>
+                    <th>Tarifa aplicada:</th>
+                    <td>
+                        <?php if ($lectura['tarifa_id'] !== null): ?>
+                            #<?= esc((string) $lectura['tarifa_id']) ?>
+                        <?php else: ?>
+                            <span class="text-muted">Tarifa de prueba</span>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr class="table-success">
+                    <th>Monto a pagar:</th>
+                    <td><strong>Q<?= esc(number_format((float) $lectura['monto'], 2)) ?></strong></td>
+                </tr>
+            </table>
+        </div>
+        <div class="text-center text-muted py-3 border-top">
+            <small>Generado el <?= date('d/m/Y H:i') ?></small>
+        </div>
     </div>
+
+    <div class="no-imprimir mt-3 text-center">
+        <a href="<?= site_url('dashboard') ?>" class="btn btn-outline-secondary rounded-pill">Volver al Dashboard</a>
+    </div>
+
 </main>
 
-<nav class="bottom-nav">
+<nav class="bottom-nav no-imprimir">
     <a href="<?= site_url('dashboard') ?>" class="nav-item">
         <i class="fas fa-th-large"></i>
         <span>Dashboard</span>
