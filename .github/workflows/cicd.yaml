@@ -89,5 +89,11 @@ jobs:
             --region="${{ env.REGION }}" \
             --platform=managed \
             --allow-unauthenticated \
+            --cpu=1 \
+            --memory=512Mi \
+            --concurrency=20 \
+            --timeout=60 \
+            --min-instances=0 \
+            --max-instances=2 \
             --add-cloudsql-instances="${{ env.CLOUD_SQL_INSTANCE }}" \
             --set-env-vars="CI_ENVIRONMENT=production,app.baseURL=${{ secrets.APP_BASE_URL }},database.default.hostname=${{ secrets.DB_HOST }},database.default.database=${{ secrets.DB_NAME }},database.default.username=${{ secrets.DB_USER }},database.default.password=${{ secrets.DB_PASSWORD }},database.default.DBDriver=MySQLi,database.default.port=3306,encryption.key=${{ secrets.ENCRYPTION_KEY }}"
