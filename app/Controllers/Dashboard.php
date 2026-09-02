@@ -41,11 +41,11 @@ class Dashboard extends BaseController
 
         // Lecturas pendientes (sin pago registrado)
         $lecturasPendientes = $lecturasModel
-            ->select('lecturas.*, clientes.nombre as cliente_nombre, contadores.codigo as contador_codigo')
-            ->join('contadores', 'contadores.id = lecturas.contador_id')
-            ->join('clientes', 'clientes.id = contadores.cliente_id')
-            ->whereNotIn('lecturas.id', function($builder) {
-                return $builder->select('lectura_id')->from('pagos')->where('estado', 'Completado');
+            ->select('Lecturas.*, Clientes.nombre as cliente_nombre, Contadores.codigo as contador_codigo')
+            ->join('Contadores', 'Contadores.id = Lecturas.contador_id')
+            ->join('Clientes', 'Clientes.id = Contadores.cliente_id')
+            ->whereNotIn('Lecturas.id', function($builder) {
+                return $builder->select('lectura_id')->from('Pagos')->where('estado', 'Completado');
             })
             ->findAll();
 
