@@ -12,6 +12,9 @@ RUN apt-get update \
     && sed -i 's/:80>/:8080>/' /etc/apache2/sites-available/000-default.conf \
     && rm -rf /var/lib/apt/lists/*
 
+# Habilitar que Apache lea los archivos .htaccess (AllowOverride All)
+RUN echo "<Directory /var/www/html/public>\n\tAllowOverride All\n\tRequire all granted\n</Directory>" >> /etc/apache2/apache2.conf
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
