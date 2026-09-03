@@ -13,4 +13,4 @@ $routes->post('/logout', 'Auth::logout');
 // Dashboard route with authentication filter
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Auth::login');
