@@ -8,11 +8,11 @@ on:
 
 env:
   PROJECT_ID: steam-canto-506904-r0
-  REGION: us-central1
-  SERVICE_NAME: gota-app
+  REGION: europe-west1
+  SERVICE_NAME: gota
   REPOSITORY: gota
   IMAGE_NAME: gota-app
-  CLOUD_SQL_INSTANCE: steam-canto-506904-r0:us-central1:gota-db
+  CLOUD_SQL_INSTANCE: pelagic-radio-506904-n9:us-central1:gota-db
 
 jobs:
   test:
