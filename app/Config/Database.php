@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
+        'hostname'     => '/cloudsql/pelagic-radio-506904-n9:us-central1:gota-db',
+        'username'     => 'ulises',
+        'password'     => 'ulises123456',
+        'database'     => 'gota_db',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
