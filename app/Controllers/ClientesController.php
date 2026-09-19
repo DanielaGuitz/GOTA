@@ -56,8 +56,9 @@ class ClientesController extends BaseController
             ]);
         }
 
-        // fecha_registro y activo siempre se calculan aqui, nunca desde el formulario,
-        // para que nadie los pueda manipular enviando datos ocultos
+        // fecha_registro, activo y created_by siempre se calculan aqui,
+        // nunca desde el formulario, para que nadie los pueda manipular
+        // enviando datos ocultos
         $this->clientesModel->insert([
             'nombre'         => $this->request->getPost('nombre'),
             'telefono'       => $this->request->getPost('telefono'),
@@ -65,6 +66,8 @@ class ClientesController extends BaseController
             'email'          => $this->request->getPost('email'),
             'fecha_registro' => date('Y-m-d'),
             'activo'         => 1,
+            'created_by'     => session()->get('usuario_id'),
+            'updated_by'     => session()->get('usuario_id'),
         ]);
 
         return redirect()->to('/clientes')->with('mensaje', 'Cliente registrado correctamente');

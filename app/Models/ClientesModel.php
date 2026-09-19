@@ -11,6 +11,6 @@ class ClientesModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
-    protected $allowedFields    = ['nombre', 'telefono', 'direccion', 'email', 'fecha_registro', 'activo'];
+    protected $allowedFields    = ['nombre', 'telefono', 'direccion', 'email', 'fecha_registro', 'activo', 'created_by', 'updated_by'];
     protected $useTimestamps    = false;
 }
