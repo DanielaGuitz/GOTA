@@ -28,11 +28,12 @@
     }
 
     body {
-        background: #f5f7fb;
+        background: var(--app-bg);
         padding: 0;
         margin: 0;
         min-height: 100vh;
         padding-bottom: 80px; /* Espacio para navegación inferior */
+        transition: background 0.3s ease, color 0.3s ease;
     }
 
     /* ============================================
@@ -42,9 +43,9 @@
         position: sticky;
         top: 0;
         z-index: 1000;
-        background: #ffffff;
+        background: var(--app-surface);
         padding: 12px 16px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        box-shadow: var(--shadow-sm);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -68,8 +69,8 @@
 
     .app-header .brand small {
         font-size: 0.65rem;
-        color: var(--secondary);
-        -webkit-text-fill-color: var(--secondary);
+        color: var(--app-muted);
+        -webkit-text-fill-color: var(--app-muted);
         display: block;
         font-weight: 400;
     }
@@ -85,8 +86,8 @@
         height: 40px;
         border-radius: 50%;
         border: none;
-        background: #f0f2f5;
-        color: #1a1a2e;
+        background: var(--app-card-soft);
+        color: var(--app-text);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -121,7 +122,7 @@
         font-weight: 700;
         font-size: 1rem;
         cursor: pointer;
-        border: 2px solid #fff;
+        border: 2px solid var(--app-surface);
         box-shadow: var(--shadow-sm);
     }
 
@@ -133,7 +134,7 @@
         background: none;
         border: none;
         font-size: 1.5rem;
-        color: #1a1a2e;
+        color: var(--app-text);
         padding: 4px 8px;
     }
 
