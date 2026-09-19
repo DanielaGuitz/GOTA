@@ -45,9 +45,10 @@
         }
 
         body {
-            background: #f5f7fb;
+            background: var(--app-bg);
             min-height: 100vh;
             padding-bottom: 72px;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .app-header {
@@ -58,8 +59,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 12px 16px;
-            background: #fff;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            background: var(--app-surface);
+            box-shadow: var(--app-shadow);
         }
 
         .app-header .brand,
@@ -77,7 +78,7 @@
 
         .app-header .brand small {
             display: block;
-            color: #6c757d;
+            color: var(--app-muted);
             font-size: 0.65rem;
         }
 
@@ -88,7 +89,7 @@
         }
 
         .menu-toggle {
-            color: #1a1a2e;
+            color: var(--app-text);
             font-size: 1.4rem;
         }
 
@@ -181,9 +182,9 @@
             display: flex;
             justify-content: space-around;
             padding: 8px 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            background: #fff;
-            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+            border-top: 1px solid var(--app-border);
+            background: var(--app-surface);
+            box-shadow: var(--app-shadow);
         }
 
         .shared-bottom-nav a {
@@ -191,7 +192,7 @@
             flex-direction: column;
             align-items: center;
             gap: 2px;
-            color: #6c757d;
+            color: var(--app-muted);
             font-size: 0.6rem;
             text-decoration: none;
         }
