@@ -110,12 +110,14 @@ class ClientesController extends BaseController
             ]);
         }
 
-        // fecha_registro no se toca en una actualizacion, solo se definio al crear
+        // fecha_registro y created_by no se tocan en una actualizacion,
+        // solo el ultimo usuario que edito (updated_by)
         $this->clientesModel->update($id, [
             'nombre'    => $this->request->getPost('nombre'),
             'telefono'  => $this->request->getPost('telefono'),
             'direccion' => $this->request->getPost('direccion'),
             'email'     => $this->request->getPost('email'),
+            'updated_by' => session()->get('usuario_id'),
         ]);
 
         return redirect()->to('/clientes')->with('mensaje', 'Cliente actualizado correctamente');
@@ -130,7 +132,7 @@ class ClientesController extends BaseController
             return redirect()->to('/clientes')->with('error', 'Cliente no encontrado');
         }
 
-        $this->clientesModel->update($id, ['activo' => 0]);
+        $this->clientesModel->update($id, ['activo' => 0, 'updated_by' => session()->get('usuario_id')]);
 
         return redirect()->to('/clientes')->with('mensaje', 'Cliente desactivado correctamente');
     }
@@ -146,7 +148,7 @@ class ClientesController extends BaseController
             return redirect()->to('/clientes')->with('error', 'Cliente no encontrado');
         }
 
-        $this->clientesModel->update($id, ['activo' => 1]);
+        $this->clientesModel->update($id, ['activo' => 1, 'updated_by' => session()->get('usuario_id')]);
 
         return redirect()->to('/clientes')->with('mensaje', 'Cliente reactivado correctamente');
     }
