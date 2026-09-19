@@ -258,9 +258,11 @@
                 </div>
             </div>
             <div class="header-actions">
-                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema claro/oscuro">
-                    <i class="fas fa-moon"></i>
-                </button>
+                <?php if ($activeSection === 'dashboard'): ?>
+                    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema claro/oscuro">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                <?php endif; ?>
                 <div class="user-avatar">
                     <?= esc(gota_initials(session()->get('usuario_nombre'))) ?>
                 </div>
@@ -324,7 +326,8 @@
             const themeToggle = document.getElementById('themeToggle');
             const updateThemeIcon = () => {
                 const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                themeToggle.querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                const icon = themeToggle?.querySelector('i');
+                if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
             };
             updateThemeIcon();
             themeToggle?.addEventListener('click', () => {

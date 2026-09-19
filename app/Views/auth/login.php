@@ -8,8 +8,6 @@
         --primary: #0d6efd;
         --primary-dark: #0a58ca;
         --accent: #4fc3f7;
-        --ink: #1a1a2e;
-        --page: #f5f7fb;
         --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
     }
 
@@ -21,7 +19,8 @@
     body {
         min-height: 100vh;
         margin: 0;
-        background: var(--page);
+        background: var(--app-bg);
+        transition: background 0.3s ease;
     }
 
     .login-page {
@@ -36,7 +35,7 @@
         justify-content: space-between;
         padding: 40px clamp(28px, 6vw, 88px);
         color: #fff;
-        background: var(--ink);
+        background: #1a1a2e;
     }
 
     .login-brand h1 {
@@ -76,30 +75,32 @@
     .login-card {
         width: min(100%, 420px);
         padding: clamp(28px, 5vw, 48px);
-        background: #fff;
+        background: var(--app-card);
         border-radius: 16px;
         box-shadow: var(--shadow-lg);
     }
 
     .login-card h2 {
         margin: 0 0 8px;
-        color: var(--ink);
+        color: var(--app-text);
         font-weight: 800;
     }
 
     .login-card .subtitle {
         margin-bottom: 28px;
-        color: #6c757d;
+        color: var(--app-muted);
     }
 
     .login-card .form-label {
-        color: var(--ink);
+        color: var(--app-text);
         font-weight: 600;
     }
 
     .login-card .form-control {
         min-height: 48px;
-        border-color: #e1e5eb;
+        border-color: var(--app-border);
+        background-color: var(--app-card-soft);
+        color: var(--app-text);
         border-radius: 10px;
     }
 
@@ -114,6 +115,13 @@
         border-radius: 10px;
         background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         font-weight: 700;
+    }
+
+    .login-theme-toggle {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 1080;
     }
 
     @media (max-width: 720px) {
@@ -143,6 +151,9 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<button type="button" class="theme-toggle login-theme-toggle" id="themeToggle" aria-label="Cambiar tema claro/oscuro">
+    <i class="fas fa-moon"></i>
+</button>
 <main class="login-page">
     <section class="login-brand" aria-label="GOTA">
         <div>
@@ -177,4 +188,25 @@
         </div>
     </section>
 </main>
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        const updateThemeIcon = () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            themeToggle.querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        };
+        updateThemeIcon();
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            document.documentElement.setAttribute('data-bs-theme', next);
+            localStorage.setItem('gotaTheme', next);
+            updateThemeIcon();
+        });
+    }
+</script>
 <?= $this->endSection() ?>
