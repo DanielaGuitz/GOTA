@@ -45,7 +45,7 @@
         z-index: 1000;
         background: var(--app-surface);
         padding: 12px 16px;
-        box-shadow: var(--shadow-sm);
+        box-shadow: var(--app-shadow-sm);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -282,12 +282,12 @@
     }
 
     .stat-card {
-        background: #fff;
+        background: var(--app-card);
         border-radius: var(--card-radius);
         padding: 16px;
         box-shadow: var(--shadow-sm);
         transition: all 0.3s ease;
-        border: 1px solid rgba(0,0,0,0.03);
+        border: 1px solid var(--app-border);
     }
 
     .stat-card:active {
@@ -335,13 +335,13 @@
     .stat-card .stat-number {
         font-size: 1.5rem;
         font-weight: 800;
-        color: #1a1a2e;
+        color: var(--app-text);
         margin: 0;
         line-height: 1.2;
     }
 
     .stat-card .stat-label {
-        color: var(--secondary);
+        color: var(--app-muted);
         font-size: 0.7rem;
         font-weight: 500;
         margin: 0;
@@ -351,7 +351,7 @@
 
     .stat-card .stat-sub {
         font-size: 0.6rem;
-        color: var(--secondary);
+        color: var(--app-muted);
         margin-top: 4px;
     }
 
@@ -366,22 +366,22 @@
     }
 
     .analytics-card {
-        background: #fff;
+        background: var(--app-card);
         border-radius: var(--card-radius);
         padding: 14px;
         text-align: center;
         box-shadow: var(--shadow-sm);
-        border: 1px solid rgba(0,0,0,0.03);
+        border: 1px solid var(--app-border);
     }
 
     .analytics-card .analytics-number {
         font-size: 1.3rem;
         font-weight: 800;
-        color: #1a1a2e;
+        color: var(--app-text);
     }
 
     .analytics-card .analytics-label {
-        color: var(--secondary);
+        color: var(--app-muted);
         font-size: 0.6rem;
         font-weight: 600;
         text-transform: uppercase;
@@ -393,11 +393,11 @@
        TABLA DE LECTURAS (Mobile Optimized)
        ============================================ */
     .table-container {
-        background: #fff;
+        background: var(--app-card);
         border-radius: var(--card-radius);
         padding: 16px;
         box-shadow: var(--shadow-sm);
-        border: 1px solid rgba(0,0,0,0.03);
+        border: 1px solid var(--app-border);
     }
 
     .table-container .table-header {
@@ -422,7 +422,7 @@
 
     /* Cards para móvil en lugar de tabla */
     .lectura-card {
-        background: #f8f9fa;
+        background: var(--app-card-soft);
         border-radius: 12px;
         padding: 14px;
         margin-bottom: 10px;
@@ -452,12 +452,12 @@
     .lectura-card .lectura-cliente {
         font-weight: 700;
         font-size: 0.9rem;
-        color: #1a1a2e;
+        color: var(--app-text);
     }
 
     .lectura-card .lectura-cliente small {
         font-weight: 400;
-        color: var(--secondary);
+        color: var(--app-muted);
         font-size: 0.7rem;
         display: block;
     }
@@ -498,7 +498,7 @@
         gap: 8px;
         margin: 10px 0;
         padding: 10px;
-        background: #fff;
+        background: var(--app-card);
         border-radius: 8px;
     }
 
@@ -509,12 +509,12 @@
     .lectura-card .lectura-details .detail-item .value {
         font-weight: 700;
         font-size: 0.85rem;
-        color: #1a1a2e;
+        color: var(--app-text);
     }
 
     .lectura-card .lectura-details .detail-item .label {
         font-size: 0.55rem;
-        color: var(--secondary);
+        color: var(--app-muted);
         text-transform: uppercase;
         letter-spacing: 0.3px;
     }
@@ -546,7 +546,7 @@
 
     .pagination-wrapper small {
         font-size: 0.7rem;
-        color: var(--secondary);
+        color: var(--app-muted);
     }
 
     .pagination-wrapper .pagination {
@@ -566,14 +566,14 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background: #fff;
+        background: var(--app-surface);
         display: flex;
         justify-content: space-around;
         align-items: center;
         padding: 8px 0;
-        box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+        box-shadow: var(--shadow-sm);
         z-index: 1000;
-        border-top: 1px solid rgba(0,0,0,0.05);
+        border-top: 1px solid var(--app-border);
     }
 
     .bottom-nav .nav-item {
@@ -583,7 +583,7 @@
         gap: 2px;
         background: none;
         border: none;
-        color: var(--secondary);
+        color: var(--app-muted);
         font-size: 0.55rem;
         padding: 4px 12px;
         transition: all 0.2s ease;
