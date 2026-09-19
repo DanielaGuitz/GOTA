@@ -19,6 +19,29 @@
             --app-primary: #0d6efd;
             --app-primary-dark: #0a58ca;
             --app-sidebar-width: 280px;
+            --app-bg: #f5f7fb;
+            --app-surface: #ffffff;
+            --app-card: #ffffff;
+            --app-card-soft: #f8f9fa;
+            --app-border: rgba(0, 0, 0, 0.05);
+            --app-text: #1a1a2e;
+            --app-muted: #6c757d;
+            --app-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --app-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        html[data-theme="dark"] {
+            --app-primary: #4f9dff;
+            --app-primary-dark: #3a7ce0;
+            --app-bg: #0f1220;
+            --app-surface: #181c2e;
+            --app-card: #1e2437;
+            --app-card-soft: #252b40;
+            --app-border: rgba(255, 255, 255, 0.08);
+            --app-text: #e9edf5;
+            --app-muted: #94a0b8;
+            --app-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+            --app-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
         }
 
         body {
