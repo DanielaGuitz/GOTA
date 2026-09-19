@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title><?= $this->renderSection('title') ?> - GOTA</title>
+    <script>
+        (function () {
+            var theme = localStorage.getItem('gotaTheme') ||
+                (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
     
     <!-- Bootstrap 5 Mobile First -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -80,6 +88,26 @@
             display: block;
             color: var(--app-muted);
             font-size: 0.65rem;
+        }
+
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--app-border);
+            background: var(--app-card-soft);
+            color: var(--app-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--app-primary);
+            border-color: var(--app-primary);
         }
 
         .menu-toggle,
@@ -230,6 +258,9 @@
                 </div>
             </div>
             <div class="header-actions">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema claro/oscuro">
+                    <i class="fas fa-moon"></i>
+                </button>
                 <div class="user-avatar">
                     <?= esc(gota_initials(session()->get('usuario_nombre'))) ?>
                 </div>
@@ -289,6 +320,21 @@
             });
             sharedCloseSidebar?.addEventListener('click', closeSharedSidebar);
             sharedSidebarOverlay?.addEventListener('click', closeSharedSidebar);
+
+            const themeToggle = document.getElementById('themeToggle');
+            const updateThemeIcon = () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                themeToggle.querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            };
+            updateThemeIcon();
+            themeToggle?.addEventListener('click', () => {
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                document.documentElement.setAttribute('data-bs-theme', next);
+                localStorage.setItem('gotaTheme', next);
+                updateThemeIcon();
+            });
         </script>
     <?php else: ?>
         <?= $this->renderSection('content') ?>
