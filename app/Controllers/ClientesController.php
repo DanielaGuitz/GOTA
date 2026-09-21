@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ClientesModel;
+use App\Models\UsuarioModel;
 
 class ClientesController extends BaseController
 {
@@ -25,9 +26,25 @@ class ClientesController extends BaseController
             $clientes = $this->clientesModel->where('activo', 1)->findAll();
         }
 
+        // Mapa id_usuario => nombre para mostrar quién creó/editó cada cliente
+        // en el modal de detalle. Solo se consultan los usuarios referenciados.
+        $auditoria = [];
+        $idsUsuarios = array_unique(array_filter(array_merge(
+            array_column($clientes, 'created_by'),
+            array_column($clientes, 'updated_by')
+        )));
+
+        if ($idsUsuarios !== []) {
+            $usuarios = (new UsuarioModel())->whereIn('id', $idsUsuarios)->findAll();
+            foreach ($usuarios as $usuario) {
+                $auditoria[$usuario['id']] = $usuario['nombre'];
+            }
+        }
+
         return view('clientes/index', [
             'clientes'         => $clientes,
             'mostrarInactivos' => $mostrarInactivos,
+            'auditoria'        => $auditoria,
         ]);
     }
 

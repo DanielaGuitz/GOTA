@@ -100,6 +100,18 @@
                                 <?php endif; ?>
                             </td>
                             <td class="text-end">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                        data-bs-target="#detalleClienteModal"
+                                        data-nombre="<?= esc($cliente['nombre'], 'attr') ?>"
+                                        data-telefono="<?= esc($cliente['telefono'] ?? '-', 'attr') ?>"
+                                        data-direccion="<?= esc($cliente['direccion'], 'attr') ?>"
+                                        data-email="<?= esc($cliente['email'] ?? '-', 'attr') ?>"
+                                        data-registro="<?= esc($cliente['fecha_registro']) ?>"
+                                        data-activo="<?= $cliente['activo'] ? 'Activo' : 'Inactivo' ?>"
+                                        data-creado="<?= esc($auditoria[$cliente['created_by']] ?? 'Sistema', 'attr') ?>"
+                                        data-actualizado="<?= esc($auditoria[$cliente['updated_by']] ?? 'Sin ediciones', 'attr') ?>">
+                                    Detalle
+                                </button>
                                 <a href="/clientes/editar/<?= $cliente['id'] ?>" class="btn btn-sm btn-outline-primary">
                                     Editar
                                 </a>
@@ -125,4 +137,62 @@
     </div>
 
 </div>
+
+<div class="modal fade" id="detalleClienteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Detalle del cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Nombre</dt>
+                    <dd class="col-sm-8" id="det-nombre">-</dd>
+
+                    <dt class="col-sm-4">Teléfono</dt>
+                    <dd class="col-sm-8" id="det-telefono">-</dd>
+
+                    <dt class="col-sm-4">Dirección</dt>
+                    <dd class="col-sm-8" id="det-direccion">-</dd>
+
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8" id="det-email">-</dd>
+
+                    <dt class="col-sm-4">Registro</dt>
+                    <dd class="col-sm-8" id="det-registro">-</dd>
+
+                    <dt class="col-sm-4">Estado</dt>
+                    <dd class="col-sm-8" id="det-activo">-</dd>
+
+                    <dt class="col-sm-4">Creado por</dt>
+                    <dd class="col-sm-8" id="det-creado">-</dd>
+
+                    <dt class="col-sm-4">Actualizado por</dt>
+                    <dd class="col-sm-8" id="det-actualizado">-</dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+<script>
+    const modal = document.getElementById('detalleClienteModal');
+    modal.addEventListener('show.bs.modal', (event) => {
+        const btn = event.relatedTarget;
+        modal.querySelector('#det-nombre').textContent      = btn.dataset.nombre;
+        modal.querySelector('#det-telefono').textContent    = btn.dataset.telefono;
+        modal.querySelector('#det-direccion').textContent   = btn.dataset.direccion;
+        modal.querySelector('#det-email').textContent       = btn.dataset.email;
+        modal.querySelector('#det-registro').textContent    = btn.dataset.registro;
+        modal.querySelector('#det-activo').textContent      = btn.dataset.activo;
+        modal.querySelector('#det-creado').textContent      = btn.dataset.creado;
+        modal.querySelector('#det-actualizado').textContent = btn.dataset.actualizado;
+    });
+</script>
 <?= $this->endSection() ?>
